@@ -17,7 +17,10 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author SANTIAGO MUÑOZ
+ * @author Mannuel Fernando Granoble
+ *         Michel Andrea Gutierrez Vallejo
+ *         Ximena Quijano Gutierrez
+ *         Nathalia Ruiz Menses
  */
 public class RestaurantRepositoryImplMysql implements IRestaurantRepository {
 
@@ -26,9 +29,9 @@ public class RestaurantRepositoryImplMysql implements IRestaurantRepository {
      */
     public Connection conn;
 
-    public RestaurantRepositoryImplMysql() {
+        public RestaurantRepositoryImplMysql() {
 
-    }
+        }
 
     /**
      * Permite hacer la conexion con la base de datos
@@ -49,7 +52,35 @@ public class RestaurantRepositoryImplMysql implements IRestaurantRepository {
         }
         return -1;
     }
+    /**
+     * 
+     * @param prmRestaurant
+     * @return 
+     */
+   @Override
+    public String createRestaurant(Restaurant prmRestaurant) {
+        try {
+             this.connect();
+            String sql ="INSERT INTO restaurantathand.restaurant (nitrest,usernameper,namerest,addressrest, emailrest, cityrest, phonerest)values(?,?,?,?,?,?,?);";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, prmRestaurant.getAtrNitRest());
+            pstmt.setString(2, prmRestaurant.getAtrAdmiRest());
+            pstmt.setString(3, prmRestaurant.getAtrNameRest());
+            pstmt.setString(4, prmRestaurant.getAtrAddressRest());
+            pstmt.setString(5, prmRestaurant.getAtrEmailRest());
+            pstmt.setString(6, prmRestaurant.getAtrCityRest());
+            pstmt.setString(7, prmRestaurant.getAtrMobileRest());
 
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(RestaurantRepositoryImplMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+        }
+        return prmRestaurant.getAtrNitRest();
+    }
+
+    
     /**
      * Busca en la bd un restaurante
      * @param prmNit Nit 
@@ -58,8 +89,8 @@ public class RestaurantRepositoryImplMysql implements IRestaurantRepository {
     @Override
     public Restaurant findRestaurant(String prmNit) {
         Restaurant restaurant = null;
-        this.connect();
         try {
+            this.connect();
             String sql = "SELECT * from Restaurante where nit=? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, prmNit ); 
@@ -84,29 +115,7 @@ public class RestaurantRepositoryImplMysql implements IRestaurantRepository {
         return restaurant;
     }
 
-    @Override
-    public String createRestaurant(Restaurant prmRestaurant) {
-        try {
-            this.connect();
-            
-            String sql ="INSERT INTO restaurante(nit,nombre,address, mobile, email)values(?,?,?,?,?);";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, prmRestaurant.getAtrNitRest());
-            //pstmt.setString(2, parRestauran.getAdminId());
-            pstmt.setString(2, prmRestaurant.getAtrNameRest());
-            pstmt.setString(3, prmRestaurant.getAtrAddressRest());
-            pstmt.setString(4, prmRestaurant.getAtrMobileRest());
-            pstmt.setString(5, prmRestaurant.getAtrEmailRest());
-
-            pstmt.executeUpdate();
-            pstmt.close();
-            this.disconnect();
-        } catch (SQLException ex) {
-            Logger.getLogger(RestaurantRepositoryImplMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
-        }
-        return prmRestaurant.getAtrNitRest();
-    }
-
+ 
     private void disconnect() {
         try {
             conn.close();

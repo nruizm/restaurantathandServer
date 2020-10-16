@@ -63,9 +63,9 @@ public class RestaurantService {
                 || prmRestaurant.getAtrEmailRest().isEmpty()) {
            errors.add(new JsonError("400", "BAD_REQUEST","nit, nombre, apellidos, email, telefono, address son obligatorios. "));
         }
-        
+        /*
         if (!prmRestaurant.getAtrEmailRest().contains("@")){
-            errors.add(new JsonError("400", "BAD_REQUEST","Email debe tener una @. "));
+            errors.add(new JsonError("400", "BAD_REQUST","Email debe tener una @. "));
         }
            
         if(!Utilities.isNumeric(prmRestaurant.getAtrMobileRest())){
@@ -75,7 +75,7 @@ public class RestaurantService {
         if(!Utilities.isNumeric(prmRestaurant.getAtrNitRest())){
             errors.add(new JsonError("400", "BAD_REQUEST","El Nit debe contener sólo dígitos "));
             
-        }
+        }*/
         // Que no esté repetido
         
         Restaurant restaurantSearched = this.findRestaurant(prmRestaurant.getAtrNitRest());

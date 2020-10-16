@@ -203,10 +203,13 @@ public class RestaurantServerSocket implements Runnable {
         Restaurant objRestaurant = new Restaurant();
         // Reconstruir el restaurant a partid de lo que viene en los parámetros
         objRestaurant.setAtrNitRest(protocolRequest.getParameters().get(0).getValue());
-        objRestaurant.setAtrNameRest(protocolRequest.getParameters().get(1).getValue());
-        objRestaurant.setAtrAddressRest(protocolRequest.getParameters().get(2).getValue());
-        objRestaurant.setAtrMobileRest(protocolRequest.getParameters().get(3).getValue());
+        objRestaurant.setAtrAdmiRest(protocolRequest.getParameters().get(1).getValue());
+        objRestaurant.setAtrNameRest(protocolRequest.getParameters().get(2).getValue());
+        objRestaurant.setAtrAddressRest(protocolRequest.getParameters().get(3).getValue());
         objRestaurant.setAtrEmailRest(protocolRequest.getParameters().get(4).getValue());
+        objRestaurant.setAtrCityRest(protocolRequest.getParameters().get(5).getValue());
+        objRestaurant.setAtrMobileRest(protocolRequest.getParameters().get(6).getValue());
+        
         
 
         String response = service.createRestaurant(objRestaurant);
